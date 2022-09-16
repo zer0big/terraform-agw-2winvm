@@ -73,8 +73,8 @@ resource "azurerm_virtual_machine_extension" "zero-vm2_extension" {
 
   settings = <<SETTINGS
     {
-        "fileUris": ["https://${azurerm_storage_account.zero-sa.name}.blob.core.windows.net/data/IIS_Config_image.ps1"],
-          "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file IIS_Config_image.ps1"     
+        "fileUris": ["https://${azurerm_storage_account.zero-sa.name}.blob.core.windows.net/data/IIS_Config_images.ps1"],
+          "commandToExecute": "powershell -ExecutionPolicy Unrestricted -file IIS_Config_images.ps1"     
     }
 SETTINGS
 }

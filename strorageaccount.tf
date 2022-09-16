@@ -41,11 +41,11 @@ resource "azurerm_storage_blob" "IIS_config_video" {
 }
 
 resource "azurerm_storage_blob" "IIS_config_image" {
-  name                   = "IIS_Config_image.ps1"
+  name                   = "IIS_Config_images.ps1"
   storage_account_name   = var.storage_account_name
   storage_container_name = azurerm_storage_container.zero-cont.name
   type                   = "Block"
-  source                 = "IIS_Config_image.ps1"
+  source                 = "IIS_Config_images.ps1"
   depends_on = [
     azurerm_storage_container.zero-cont
   ]
