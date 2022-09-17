@@ -70,18 +70,9 @@ resource "azurerm_application_gateway" "zero-appgw" {
   }
 
   backend_http_settings {
-    name                  = "http-setting1"
+    name                  = "http-setting"
     cookie_based_affinity = "Disabled"
-    path                  = "/video/"
-    port                  = 80
-    protocol              = "Http"
-    request_timeout       = 60
-  }
-
-  backend_http_settings {
-    name                  = "http-setting2"
-    cookie_based_affinity = "Disabled"
-    path                  = "/images/"
+    path                  = ""
     port                  = 80
     protocol              = "Http"
     request_timeout       = 60
@@ -95,18 +86,33 @@ resource "azurerm_application_gateway" "zero-appgw" {
   }
 
   request_routing_rule {
-    name                       = "routing-rule1"
-    rule_type                  = "Basic"
-    http_listener_name         = "listener"
-    backend_address_pool_name  = "videopool"
-    backend_http_settings_name = "http-setting1"
+    name               = "RoutingRule"
+    rule_type          = "PathBasedRouting"
+    url_path_map_name  = "RoutingPath"
+    http_listener_name = "listener"
   }
 
-  request_routing_rule {
-    name                       = "routing-rule2"
-    rule_type                  = "Basic"
-    http_listener_name         = "listener"
-    backend_address_pool_name  = "imagepool"
-    backend_http_settings_name = "http-setting2"
+  url_path_map {
+    name                               = "RoutingPath"    
+    default_backend_address_pool_name   = "videopool"
+    default_backend_http_settings_name  = "http-setting"
+
+    path_rule {
+      name                          = "VideoRoutingRule"
+      backend_address_pool_name     = "videopool"
+      backend_http_settings_name    = "http-setting"
+      paths = [
+        "/videos/*",
+      ]
+    }
+
+    path_rule {
+      name                          = "ImageRoutingRule"
+      backend_address_pool_name     = "imagepool"
+      backend_http_settings_name    = "http-setting"
+      paths = [
+        "/images/*",
+      ]
+    }
   }
 }
