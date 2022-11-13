@@ -28,22 +28,6 @@ resource "azurerm_windows_virtual_machine" "zero-vm1" {
   ]
 }
 
-# resource "azurerm_managed_disk" "zero-mdisk1" {
-#   name                 = "web1-data-disk"
-#   location             = azurerm_resource_group.zero-rg.location
-#   resource_group_name  = azurerm_resource_group.zero-rg.name
-#   storage_account_type = "Standard_LRS"
-#   create_option        = "Empty"
-#   disk_size_gb         = "10"
-# }
-
-# resource "azurerm_virtual_machine_data_disk_attachment" "zero-disk1_attatch" {
-#   managed_disk_id    = azurerm_managed_disk.zero-mdisk1.id
-#   virtual_machine_id = azurerm_windows_virtual_machine.zero-vm1.id
-#   lun                = "10"
-#   caching            = "ReadWrite"
-# }
-
 resource "azurerm_network_interface" "zero-nic1" {
   name                = "web-nic1"
   location            = azurerm_resource_group.zero-rg.location
